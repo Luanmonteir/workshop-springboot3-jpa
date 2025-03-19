@@ -3,6 +3,7 @@ package br.com.luan.course.resources;
 import br.com.luan.course.entities.User;
 import br.com.luan.course.services.UserService;
 
+import jdk.jfr.Percentage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -37,5 +38,11 @@ public class UserResource {
         obj = service.insert(obj);
         URI uri= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete (@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
